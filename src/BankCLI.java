@@ -4,8 +4,7 @@ public class BankCLI {
     private static final Scanner sc = new Scanner(System.in);
     private static final Bank bank = new Bank();
 
-    public BankCLI() {
-
+    public void start(){
         System.out.println("\n============================================");
         System.out.println("      💳 BANK ACCOUNT CLI");
         System.out.println("============================================\n");
@@ -22,7 +21,7 @@ public class BankCLI {
                 case "2" -> handleGetAccountDetails();
                 case "3" -> handleDeposit();
                 case "4" -> handleWithdraw();
-                case "5" -> System.out.println("Transfer");
+                case "5" -> handleTransfer();
                 case "6" -> {
                     System.out.println("Exit application");
                     isRunning = false;
@@ -78,6 +77,15 @@ public class BankCLI {
     }
 
     private void handleTransfer() {
-        System.out.println();
+        System.out.print("Enter the account ID from which you will be sending money: ");
+        int fromAccount = Integer.parseInt(sc.nextLine());
+        System.out.print("Enter the account ID to which you want to send the money: ");
+        int toAccount = Integer.parseInt(sc.nextLine());
+        System.out.print("Enter the amount to transfer: ");
+        int transferAmount = Integer.parseInt(sc.nextLine());
+
+        bank.transfer(fromAccount, toAccount, transferAmount);
+
+        System.out.println(transferAmount + "rs transferred from account "+ fromAccount + " to account " + toAccount);
     }
 }
