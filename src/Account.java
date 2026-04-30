@@ -1,8 +1,8 @@
 import java.util.Random;
 
 public class Account {
-    private int accountNo;
-    private String holderName;
+    private final int accountNo;
+    private final String holderName;
     private int balance;
 
     public int getAccountNo() {
@@ -10,39 +10,40 @@ public class Account {
     }
 
     public void depositAmount(int amount) {
-        if (amount > 0) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Deposit amount cannot be less than 0");
+        } else {
             this.balance += amount;
         }
     }
 
     public void withdrawAmount(int amount) {
-        if (amount > 0 && amount < this.balance) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Withdrawal amount should be greater than 0.");
+        } else if (amount > this.balance) {
+            throw new IllegalStateException("Withdrawal amount cannot be greater than the balance.");
+        } else {
             this.balance -= amount;
         }
     }
 
     public Account(String holderName, int initialBalance) {
-        if (!holderName.isEmpty() && !(initialBalance < 0)) {
+        if (holderName.isEmpty()) {
+            throw new IllegalArgumentException("Account holder name cannot be empty");
+        } else if (initialBalance < 0) {
+            throw new IllegalArgumentException("Account balance cannot be empty");
+        } else {
             this.holderName = holderName;
-            this.accountNo = generateAccountNo();
+            this.accountNo = generateAccountNo(6);
             this.balance = initialBalance;
         }
     }
 
-    @Override
-    public String toString() {
-        return "Account{" +
-                "accountNo=" + accountNo +
-                ", holderName='" + holderName + '\'' +
-                ", balance=" + balance +
-                '}';
-    }
-
-    private int generateAccountNo() {
+    private int generateAccountNo(int accountNoLength) {
         Random rand = new Random();
-        StringBuilder sb = new StringBuilder(6);
+        StringBuilder sb = new StringBuilder(accountNoLength);
 
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < accountNoLength; i++) {
             if (i == 0) {
                 sb.append(rand.nextInt(9) + 1);
             } else {

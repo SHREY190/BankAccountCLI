@@ -7,14 +7,18 @@ public class Bank {
         return AccountLookup;
     }
 
-    public void createAccount(String name, int balance) {
+    public Account createAccount(String name, int balance) {
         Account newAccount = new Account(name, balance);
         this.AccountLookup.put(newAccount.getAccountNo(), newAccount);
-        System.out.println(getAccount(newAccount.getAccountNo()));
+        return getAccount(newAccount.getAccountNo());
     }
 
     public Account getAccount(int accountNo) {
-        return AccountLookup.get(accountNo);
+        Account account = AccountLookup.get(accountNo);
+        if (account == null) {
+            throw new IllegalArgumentException("Account not found: " + accountNo);
+        }
+        return account;
     }
 
     public void deposit(int accountNo, int amount) {

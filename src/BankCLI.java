@@ -4,7 +4,7 @@ public class BankCLI {
     private static final Scanner sc = new Scanner(System.in);
     private static final Bank bank = new Bank();
 
-    public void start(){
+    public void start() {
         System.out.println("\n============================================");
         System.out.println("      💳 BANK ACCOUNT CLI");
         System.out.println("============================================\n");
@@ -26,7 +26,7 @@ public class BankCLI {
                     System.out.println("Exit application");
                     isRunning = false;
                 }
-                default -> isRunning = false;
+                default -> System.out.println("Invalid Option try again!");
             }
         }
     }
@@ -47,13 +47,21 @@ public class BankCLI {
         System.out.print("Please provide the initial balance to add in the account: ");
         int initialBalance = Integer.parseInt(sc.nextLine());
 
-        bank.createAccount(accountHolderName, initialBalance);
+        try {
+            System.out.println(bank.createAccount(accountHolderName, initialBalance));
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private void handleGetAccountDetails() {
         System.out.print("Enter the account ID to fetch its details: ");
         int fetchAccountId = Integer.parseInt(sc.nextLine());
-        System.out.println(bank.getAccount(fetchAccountId));
+        try {
+            System.out.println(bank.getAccount(fetchAccountId));
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private void handleDeposit() {
@@ -62,8 +70,12 @@ public class BankCLI {
         System.out.print("Enter the amount you want to deposit: ");
         int depositAmount = Integer.parseInt(sc.nextLine());
 
-        bank.deposit(depositAccountId, depositAmount);
-        System.out.println(depositAmount + "rs has been deposited to account " + depositAccountId);
+        try {
+            bank.deposit(depositAccountId, depositAmount);
+            System.out.println(depositAmount + "rs has been deposited to account " + depositAccountId);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private void handleWithdraw() {
@@ -72,8 +84,12 @@ public class BankCLI {
         System.out.print("Enter the amount you want to withdraw: ");
         int withdrawAmount = Integer.parseInt(sc.nextLine());
 
-        bank.withdraw(withdrawAccountId, withdrawAmount);
-        System.out.println(withdrawAmount + "rs has been withdraw from account " + withdrawAmount);
+        try {
+            bank.withdraw(withdrawAccountId, withdrawAmount);
+            System.out.println(withdrawAmount + "rs has been withdraw from account " + withdrawAccountId);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
     }
 
     private void handleTransfer() {
@@ -84,8 +100,12 @@ public class BankCLI {
         System.out.print("Enter the amount to transfer: ");
         int transferAmount = Integer.parseInt(sc.nextLine());
 
-        bank.transfer(fromAccount, toAccount, transferAmount);
+        try {
+            bank.transfer(fromAccount, toAccount, transferAmount);
+            System.out.println(transferAmount + "rs transferred from account " + fromAccount + " to account " + toAccount);
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
+        }
 
-        System.out.println(transferAmount + "rs transferred from account "+ fromAccount + " to account " + toAccount);
     }
 }
