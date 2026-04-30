@@ -1,0 +1,83 @@
+import java.util.Scanner;
+
+public class BankCLI {
+    private static final Scanner sc = new Scanner(System.in);
+    private static final Bank bank = new Bank();
+
+    public BankCLI() {
+
+        System.out.println("\n============================================");
+        System.out.println("      💳 BANK ACCOUNT CLI");
+        System.out.println("============================================\n");
+
+        boolean isRunning = true;
+
+        while (isRunning) {
+            printMenu();
+            String choice = sc.nextLine().trim();
+
+
+            switch (choice) {
+                case "1" -> handleCreateAccount();
+                case "2" -> handleGetAccountDetails();
+                case "3" -> handleDeposit();
+                case "4" -> handleWithdraw();
+                case "5" -> System.out.println("Transfer");
+                case "6" -> {
+                    System.out.println("Exit application");
+                    isRunning = false;
+                }
+                default -> isRunning = false;
+            }
+        }
+    }
+
+    private void printMenu() {
+        System.out.println("Choose from the following operations: ");
+        System.out.println("1. Create new Account.");
+        System.out.println("2. Get account details.");
+        System.out.println("3. Deposit money");
+        System.out.println("4. Withdraw money");
+        System.out.println("5. Transfer money");
+        System.out.println("6. Exit Application");
+    }
+
+    private void handleCreateAccount() {
+        System.out.print("Enter the account holder's name: ");
+        String accountHolderName = sc.nextLine();
+        System.out.print("Please provide the initial balance to add in the account: ");
+        int initialBalance = Integer.parseInt(sc.nextLine());
+
+        bank.createAccount(accountHolderName, initialBalance);
+    }
+
+    private void handleGetAccountDetails() {
+        System.out.print("Enter the account ID to fetch its details: ");
+        int fetchAccountId = Integer.parseInt(sc.nextLine());
+        System.out.println(bank.getAccount(fetchAccountId));
+    }
+
+    private void handleDeposit() {
+        System.out.print("Enter the account ID in which you want to deposit the money: ");
+        int depositAccountId = Integer.parseInt(sc.nextLine());
+        System.out.print("Enter the amount you want to deposit: ");
+        int depositAmount = Integer.parseInt(sc.nextLine());
+
+        bank.deposit(depositAccountId, depositAmount);
+        System.out.println(depositAmount + "rs has been deposited to account " + depositAccountId);
+    }
+
+    private void handleWithdraw() {
+        System.out.print("Enter the account ID from which you want to withdraw the money: ");
+        int withdrawAccountId = Integer.parseInt(sc.nextLine());
+        System.out.print("Enter the amount you want to withdraw: ");
+        int withdrawAmount = Integer.parseInt(sc.nextLine());
+
+        bank.withdraw(withdrawAccountId, withdrawAmount);
+        System.out.println(withdrawAmount + "rs has been withdraw from account " + withdrawAmount);
+    }
+
+    private void handleTransfer() {
+        System.out.println();
+    }
+}
