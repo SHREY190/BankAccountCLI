@@ -1,9 +1,7 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class Bank {
-    private HashMap<Integer, Account> AccountLookup = new HashMap<>();
+    private final HashMap<Integer, Account> AccountLookup = new HashMap<>();
 
     public HashMap<Integer, Account> getAccountLookup() {
         return AccountLookup;
