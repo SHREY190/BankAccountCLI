@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Bank {
@@ -36,5 +37,13 @@ public class Bank {
         Account depositAccount = getAccount(toAccount);
         withdrawAccount.withdrawAmount(amount);
         depositAccount.depositAmount(amount);
+    }
+
+    public ArrayList<Transaction> transactionHistory(int accountNo) {
+        Account historyAccount = getAccount(accountNo);
+        if (historyAccount == null) {
+            throw new IllegalArgumentException("Account not found: ");
+        }
+        return historyAccount.getTransactions();
     }
 }

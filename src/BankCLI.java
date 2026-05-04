@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BankCLI {
@@ -22,7 +23,8 @@ public class BankCLI {
                 case "3" -> handleDeposit();
                 case "4" -> handleWithdraw();
                 case "5" -> handleTransfer();
-                case "6" -> {
+                case "6" -> handleTransactionHistory();
+                case "7" -> {
                     System.out.println("Exit application");
                     isRunning = false;
                 }
@@ -38,7 +40,9 @@ public class BankCLI {
         System.out.println("3. Deposit money");
         System.out.println("4. Withdraw money");
         System.out.println("5. Transfer money");
-        System.out.println("6. Exit Application");
+        System.out.println("6. Check Transaction History");
+        System.out.println("7. Exit Application");
+
     }
 
     private void handleCreateAccount() {
@@ -48,7 +52,7 @@ public class BankCLI {
         int initialBalance = Integer.parseInt(sc.nextLine());
 
         try {
-            System.out.println(bank.createAccount(accountHolderName, initialBalance));
+            System.out.println(bank.createAccount(accountHolderName, initialBalance).getAccountNo());
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
@@ -107,5 +111,14 @@ public class BankCLI {
             System.out.println("Error: " + e.getMessage());
         }
 
+    }
+
+    private void handleTransactionHistory() {
+        System.out.println("Enter the account ID to check its transaction history: ");
+        int historyAccount = Integer.parseInt(sc.nextLine());
+        ArrayList<Transaction> accountHistory = bank.transactionHistory(historyAccount);
+        for (Transaction transaction : accountHistory) {
+            System.out.println(transaction.toString());
+        }
     }
 }

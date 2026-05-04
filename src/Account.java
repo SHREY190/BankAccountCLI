@@ -1,18 +1,27 @@
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Account {
     private final int accountNo;
     private final String holderName;
     private int balance;
+    private final ArrayList<Transaction> transactions = new ArrayList<>();
 
     public int getAccountNo() {
         return accountNo;
+    }
+
+    public ArrayList<Transaction> getTransactions() {
+        return transactions;
     }
 
     public void depositAmount(int amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Deposit amount cannot be less than 0");
         } else {
+            long millis = System.currentTimeMillis();
+            Transaction depositTransaction = new Transaction(TransactionType.DEPOSIT, amount, millis, this.accountNo);
+            this.transactions.add(depositTransaction);
             this.balance += amount;
         }
     }
@@ -23,6 +32,9 @@ public class Account {
         } else if (amount > this.balance) {
             throw new IllegalStateException("Withdrawal amount cannot be greater than the balance.");
         } else {
+            long millis = System.currentTimeMillis();
+            Transaction withdrawTransaction = new Transaction(TransactionType.WITHDRAW, amount, millis, this.accountNo);
+            this.transactions.add(withdrawTransaction);
             this.balance -= amount;
         }
     }
