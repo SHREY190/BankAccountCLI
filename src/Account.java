@@ -17,10 +17,21 @@ public class Account {
 
     public void depositAmount(int amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Deposit amount cannot be less than 0");
+            throw new IllegalArgumentException("Deposit amount should be greater than zero.");
         } else {
             long millis = System.currentTimeMillis();
-            Transaction depositTransaction = new Transaction(TransactionType.DEPOSIT, amount, millis, this.accountNo);
+            Transaction depositTransaction = new Transaction(TransactionType.DEPOSIT, amount, millis);
+            this.transactions.add(depositTransaction);
+            this.balance += amount;
+        }
+    }
+
+    public void depositForTransfer(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Transfer amount should be greater than zero.");
+        } else {
+            long millis = System.currentTimeMillis();
+            Transaction depositTransaction = new Transaction(TransactionType.TRANSFER, amount, millis, this.accountNo);
             this.transactions.add(depositTransaction);
             this.balance += amount;
         }
@@ -31,6 +42,19 @@ public class Account {
             throw new IllegalArgumentException("Withdrawal amount should be greater than 0.");
         } else if (amount > this.balance) {
             throw new IllegalStateException("Withdrawal amount cannot be greater than the balance.");
+        } else {
+            long millis = System.currentTimeMillis();
+            Transaction withdrawTransaction = new Transaction(TransactionType.WITHDRAW, amount, millis);
+            this.transactions.add(withdrawTransaction);
+            this.balance -= amount;
+        }
+    }
+
+    public void withdrawForTransfer(int amount) {
+        if (amount <= 0) {
+            throw new IllegalArgumentException("Transfer amount should be greater than 0.");
+        } else if (amount > this.balance) {
+            throw new IllegalStateException("Transfer amount cannot be greater than the balance.");
         } else {
             long millis = System.currentTimeMillis();
             Transaction withdrawTransaction = new Transaction(TransactionType.WITHDRAW, amount, millis, this.accountNo);

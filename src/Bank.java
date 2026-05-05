@@ -35,15 +35,13 @@ public class Bank {
     public void transfer(int fromAccount, int toAccount, int amount) {
         Account withdrawAccount = getAccount(fromAccount);
         Account depositAccount = getAccount(toAccount);
-        withdrawAccount.withdrawAmount(amount);
-        depositAccount.depositAmount(amount);
+        withdrawAccount.withdrawForTransfer(amount);
+        depositAccount.depositForTransfer(amount);
     }
 
     public ArrayList<Transaction> transactionHistory(int accountNo) {
         Account historyAccount = getAccount(accountNo);
-        if (historyAccount == null) {
-            throw new IllegalArgumentException("Account not found: ");
-        }
-        return historyAccount.getTransactions();
+        ArrayList<Transaction> transactions = historyAccount.getTransactions();
+        return new ArrayList<>(transactions);
     }
 }

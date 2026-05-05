@@ -1,8 +1,14 @@
 public class Transaction {
-    private TransactionType type;
-    private int amount;
-    private long timestamp;
+    private final TransactionType type;
+    private final int amount;
+    private final long timestamp;
     private int targetAccountId;
+
+    public Transaction(TransactionType type, int amount, long timestamp) {
+        this.type = type;
+        this.amount = amount;
+        this.timestamp = timestamp;
+    }
 
     public Transaction(TransactionType type, int amount, long timestamp, int targetAccountId) {
         this.type = type;
