@@ -116,9 +116,13 @@ public class BankCLI {
     private void handleTransactionHistory() {
         System.out.println("Enter the account ID to check its transaction history: ");
         int historyAccount = Integer.parseInt(sc.nextLine());
-        ArrayList<Transaction> accountHistory = bank.transactionHistory(historyAccount);
-        for (Transaction transaction : accountHistory) {
-            System.out.println(transaction.toString());
+        try {
+            ArrayList<Transaction> accountHistory = bank.transactionHistory(historyAccount);
+            for (Transaction transaction : accountHistory) {
+                System.out.println(transaction.toString());
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 }
