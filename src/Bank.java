@@ -17,7 +17,7 @@ public class Bank {
     public Account getAccount(int accountNo) {
         Account account = AccountLookup.get(accountNo);
         if (account == null) {
-            throw new IllegalArgumentException("Account not found: " + accountNo);
+            throw new AccountNotFoundException("Could not find any account with Account No.: " + accountNo);
         }
         return account;
     }
