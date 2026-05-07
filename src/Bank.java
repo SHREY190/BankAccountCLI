@@ -35,8 +35,8 @@ public class Bank {
     public void transfer(int fromAccount, int toAccount, int amount) throws InsufficientBalanceException {
         Account withdrawAccount = getAccount(fromAccount);
         Account depositAccount = getAccount(toAccount);
-        withdrawAccount.withdrawForTransfer(amount);
-        depositAccount.depositForTransfer(amount);
+        withdrawAccount.withdrawForTransfer(amount, toAccount);
+        depositAccount.depositForTransfer(amount, fromAccount);
     }
 
     public ArrayList<Transaction> transactionHistory(int accountNo) {

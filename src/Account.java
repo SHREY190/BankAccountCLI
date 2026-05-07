@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Account {
+public class Account implements AccountOperation {
     private final int accountNo;
     private final String holderName;
     private int balance;
@@ -26,12 +26,12 @@ public class Account {
         }
     }
 
-    public void depositForTransfer(int amount) {
+    public void depositForTransfer(int amount, int fromAccount) {
         if (amount <= 0) {
             throw new InvalidAmountValueException("Transfer amount should be greater than zero.");
         } else {
             long millis = System.currentTimeMillis();
-            Transaction depositTransaction = new Transaction(TransactionType.TRANSFER, amount, millis, this.accountNo);
+            Transaction depositTransaction = new Transaction(TransactionType.TRANSFER, amount, millis, this.accountNo, fromAccount);
             this.transactions.add(depositTransaction);
             this.balance += amount;
         }
@@ -50,14 +50,14 @@ public class Account {
         }
     }
 
-    public void withdrawForTransfer(int amount) throws InsufficientBalanceException {
+    public void withdrawForTransfer(int amount, int toAccount) throws InsufficientBalanceException {
         if (amount <= 0) {
             throw new InvalidAmountValueException("Transfer amount should be greater than 0.");
         } else if (amount > this.balance) {
             throw new InsufficientBalanceException("Transfer amount cannot be greater than the balance.");
         } else {
             long millis = System.currentTimeMillis();
-            Transaction withdrawTransaction = new Transaction(TransactionType.WITHDRAW, amount, millis, this.accountNo);
+            Transaction withdrawTransaction = new Transaction(TransactionType.TRANSFER, amount, millis, toAccount, this.accountNo);
             this.transactions.add(withdrawTransaction);
             this.balance -= amount;
         }
