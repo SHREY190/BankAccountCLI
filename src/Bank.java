@@ -27,12 +27,12 @@ public class Bank {
         depositAccount.depositAmount(amount);
     }
 
-    public void withdraw(int accountNo, int amount) {
+    public void withdraw(int accountNo, int amount) throws InsufficientBalanceException {
         Account withdrawalAccount = getAccount(accountNo);
         withdrawalAccount.withdrawAmount(amount);
     }
 
-    public void transfer(int fromAccount, int toAccount, int amount) {
+    public void transfer(int fromAccount, int toAccount, int amount) throws InsufficientBalanceException {
         Account withdrawAccount = getAccount(fromAccount);
         Account depositAccount = getAccount(toAccount);
         withdrawAccount.withdrawForTransfer(amount);

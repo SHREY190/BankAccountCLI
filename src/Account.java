@@ -17,7 +17,7 @@ public class Account {
 
     public void depositAmount(int amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Deposit amount should be greater than zero.");
+            throw new InvalidAmountValueException("Deposit amount should be greater than zero.");
         } else {
             long millis = System.currentTimeMillis();
             Transaction depositTransaction = new Transaction(TransactionType.DEPOSIT, amount, millis);
@@ -28,7 +28,7 @@ public class Account {
 
     public void depositForTransfer(int amount) {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Transfer amount should be greater than zero.");
+            throw new InvalidAmountValueException("Transfer amount should be greater than zero.");
         } else {
             long millis = System.currentTimeMillis();
             Transaction depositTransaction = new Transaction(TransactionType.TRANSFER, amount, millis, this.accountNo);
@@ -37,11 +37,11 @@ public class Account {
         }
     }
 
-    public void withdrawAmount(int amount) {
+    public void withdrawAmount(int amount) throws InsufficientBalanceException {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Withdrawal amount should be greater than 0.");
+            throw new InvalidAmountValueException("Withdrawal amount should be greater than 0.");
         } else if (amount > this.balance) {
-            throw new IllegalStateException("Withdrawal amount cannot be greater than the balance.");
+            throw new InsufficientBalanceException("Withdrawal amount cannot be greater than the balance.");
         } else {
             long millis = System.currentTimeMillis();
             Transaction withdrawTransaction = new Transaction(TransactionType.WITHDRAW, amount, millis);
@@ -50,11 +50,11 @@ public class Account {
         }
     }
 
-    public void withdrawForTransfer(int amount) {
+    public void withdrawForTransfer(int amount) throws InsufficientBalanceException {
         if (amount <= 0) {
-            throw new IllegalArgumentException("Transfer amount should be greater than 0.");
+            throw new InvalidAmountValueException("Transfer amount should be greater than 0.");
         } else if (amount > this.balance) {
-            throw new IllegalStateException("Transfer amount cannot be greater than the balance.");
+            throw new InsufficientBalanceException("Transfer amount cannot be greater than the balance.");
         } else {
             long millis = System.currentTimeMillis();
             Transaction withdrawTransaction = new Transaction(TransactionType.WITHDRAW, amount, millis, this.accountNo);
@@ -67,7 +67,7 @@ public class Account {
         if (holderName.isEmpty()) {
             throw new IllegalArgumentException("Account holder name cannot be empty");
         } else if (initialBalance < 0) {
-            throw new IllegalArgumentException("Account balance cannot be empty");
+            throw new InvalidAmountValueException("Account balance cannot be empty");
         } else {
             this.holderName = holderName;
             this.accountNo = generateAccountNo(6);
