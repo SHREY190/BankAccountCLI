@@ -2,20 +2,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Bank {
-    private final HashMap<Integer, Account> AccountLookup = new HashMap<>();
+    private final HashMap<Integer, Account> accountLookup = JsonStorageManager.getStoredAccounts();
 
     public HashMap<Integer, Account> getAccountLookup() {
-        return AccountLookup;
+        return accountLookup;
     }
 
     public Account createAccount(String name, int balance) {
         Account newAccount = new Account(name, balance);
-        this.AccountLookup.put(newAccount.getAccountNo(), newAccount);
+        accountLookup.put(newAccount.getAccountNo(), newAccount);
+        JsonStorageManager.storeAccounts(accountLookup);
         return getAccount(newAccount.getAccountNo());
     }
 
     public Account getAccount(int accountNo) {
-        Account account = AccountLookup.get(accountNo);
+        Account account = accountLookup.get(accountNo);
         if (account == null) {
             throw new AccountNotFoundException("Could not find any account with Account No.: " + accountNo);
         }

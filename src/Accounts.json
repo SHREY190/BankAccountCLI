@@ -1,0 +1,20 @@
+{
+  "555689": {
+    "accountNo": 555689,
+    "holderName": "shrey",
+    "balance": 5000,
+    "transactions": []
+  },
+  "596155": {
+    "accountNo": 596155,
+    "holderName": "Ab",
+    "balance": 2000,
+    "transactions": []
+  },
+  "166568": {
+    "accountNo": 166568,
+    "holderName": "name",
+    "balance": 4646,
+    "transactions": []
+  }
+}
