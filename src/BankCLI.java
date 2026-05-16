@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Set;
 
 public class BankCLI {
     private static final Scanner sc = new Scanner(System.in);
@@ -24,7 +25,8 @@ public class BankCLI {
                 case "4" -> handleWithdraw();
                 case "5" -> handleTransfer();
                 case "6" -> handleTransactionHistory();
-                case "7" -> {
+                case "7" -> handleGetAllAccounts();
+                case "8" -> {
                     System.out.println("Exit application");
                     isRunning = false;
                 }
@@ -41,7 +43,8 @@ public class BankCLI {
         System.out.println("4. Withdraw money");
         System.out.println("5. Transfer money");
         System.out.println("6. Check Transaction History");
-        System.out.println("7. Exit Application");
+        System.out.println("7. Get all Accounts.");
+        System.out.println("8. Exit Application");
 
     }
 
@@ -123,6 +126,16 @@ public class BankCLI {
             }
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
+        }
+    }
+
+    private void handleGetAllAccounts() {
+        System.out.println("All available accounts");
+        try {
+            Set<Integer> allAccounts = bank.getAllAccounts();
+            System.out.println(allAccounts);
+        } catch (NullPointerException e) {
+            e.getMessage();
         }
     }
 }

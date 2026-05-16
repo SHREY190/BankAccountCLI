@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class Bank {
     private final HashMap<Integer, Account> accountLookup = JsonStorageManager.getStoredAccounts();
 
-    public HashMap<Integer, Account> getAccountLookup() {
-        return accountLookup;
+    public Set<Integer> getAllAccounts() {
+        return accountLookup.keySet();
     }
 
     public Account createAccount(String name, int balance) {
