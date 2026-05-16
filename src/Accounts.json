@@ -1,0 +1,29 @@
+{
+  "781049": {
+    "accountNo": 781049,
+    "holderName": "Test2",
+    "balance": 32000,
+    "transactions": [
+      {
+        "type": "DEPOSIT",
+        "amount": 2000,
+        "timestamp": 1778935617820,
+        "cashTransactionId": 0,
+        "receiverAccountId": 0,
+        "senderAccountId": 0
+      }
+    ]
+  },
+  "335958": {
+    "accountNo": 335958,
+    "holderName": "Test3",
+    "balance": 6000,
+    "transactions": []
+  },
+  "865633": {
+    "accountNo": 865633,
+    "holderName": "Test1",
+    "balance": 5000,
+    "transactions": []
+  }
+}

@@ -27,11 +27,14 @@ public class Bank {
     public void deposit(int accountNo, int amount) {
         Account depositAccount = getAccount(accountNo);
         depositAccount.depositAmount(amount);
+        JsonStorageManager.updateAccount(accountNo, accountLookup.get(accountNo));
     }
 
     public void withdraw(int accountNo, int amount) throws InsufficientBalanceException {
         Account withdrawalAccount = getAccount(accountNo);
         withdrawalAccount.withdrawAmount(amount);
+        JsonStorageManager.updateAccount(accountNo, accountLookup.get(accountNo));
+
     }
 
     public void transfer(int fromAccount, int toAccount, int amount) throws InsufficientBalanceException {
@@ -39,6 +42,8 @@ public class Bank {
         Account depositAccount = getAccount(toAccount);
         withdrawAccount.withdrawForTransfer(amount, toAccount);
         depositAccount.depositForTransfer(amount, fromAccount);
+        JsonStorageManager.updateAccount(fromAccount, accountLookup.get(fromAccount));
+        JsonStorageManager.updateAccount(toAccount, accountLookup.get(toAccount));
     }
 
     public ArrayList<Transaction> transactionHistory(int accountNo) {

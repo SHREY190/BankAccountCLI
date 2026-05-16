@@ -27,8 +27,12 @@ public class JsonStorageManager {
         try (FileReader reader = new FileReader("src/Accounts.json")) {
             Type type = new TypeToken<HashMap<Integer, Account>>() {
             }.getType();
+            HashMap<Integer, Account> accounts = gson.fromJson(reader, type);
+            if (accounts != null) {
+                return accounts;
+            }
 
-            return gson.fromJson(reader, type);
+            return new HashMap<>();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,5 +40,37 @@ public class JsonStorageManager {
     }
 
 
-//    public static
+    public static void updateAccount(int accountId, Account accountData) {
+        Gson gson = new Gson();
+
+        try (FileReader reader = new FileReader("src/Accounts.json")) {
+            Type type = new TypeToken<HashMap<Integer, Account>>() {
+            }
+                    .getType();
+
+            HashMap<Integer, Account> availableAccount = gson.fromJson(reader, type);
+
+            if (availableAccount != null) {
+
+                try {
+                    availableAccount.put(accountId, accountData);
+
+                    Gson readGson = new GsonBuilder()
+                            .setPrettyPrinting()
+                            .create();
+
+                    try (FileWriter writer = new FileWriter("src/Accounts.json")) {
+                        readGson.toJson(availableAccount, writer);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } catch (NullPointerException e) {
+                    e.getMessage();
+                }
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
