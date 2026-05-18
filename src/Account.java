@@ -7,6 +7,14 @@ public class Account implements AccountOperation {
     private int balance;
     private final ArrayList<Transaction> transactions = new ArrayList<>();
 
+    public String getHolderName() {
+        return holderName;
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
     public int getAccountNo() {
         return accountNo;
     }
